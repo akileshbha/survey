@@ -8,12 +8,20 @@ import { useState, useEffect } from "react";
 //     description: 'Survey results page',
 // };
 
+type User = {
+    id: number;
+    name: string;
+    age: number;
+    email: string;
+};
+
 export default function Survey() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     // const onSubmit = data => console.log(data);
     console.log(errors);
 
-    const [users, setUsers] = useState([]); useEffect(() => {
+    const [users, setUsers] = useState<User[]>([]);
+    useEffect(() => {
         getUsers().then(setUsers);
     }, []);
     console.log('users', users)
@@ -21,7 +29,7 @@ export default function Survey() {
     return (
         <>
             <div>
-                <button onClick={() => createUser("John Doe", "john@example.com")}>
+                <button onClick={() => createUser("John Doe", 20, "john@example.com")}>
                     Add User
                 </button>
                 <ul>
