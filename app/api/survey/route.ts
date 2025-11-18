@@ -1,6 +1,5 @@
-import { db } from "@/db";                // your drizzle connection
 // import { mailingList } from "@/db/schema"; // your table schema
-import { createUser, getUsers, updateUser, deleteUser } from "@/lib/actions";
+import { createUser } from "@/lib/actions";
 
 
 export async function POST(req: Request) {
