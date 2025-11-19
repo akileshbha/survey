@@ -1,14 +1,75 @@
-import Link from 'next/link';
+"use client";
 
-export const metadata = {
+import { useForm } from 'react-hook-form';
+import { createUser, getUsers, updateUser, deleteUser } from "@/lib/actions";
+import { useState, useEffect } from "react";
+import Link from 'next/link';
+import { Metadata } from 'next';
+import { redirect, RedirectType } from 'next/navigation'
+
+const metadata: Metadata = {
     title: 'Results',
-    description: 'Survey results page',
+    description: 'Baltimore Form Survey results page',
+    metadataBase: new URL('https://akilesh.in'),
+};
+type User = {
+    id: number;
+    name: string;
+    age: number;
+    email: string;
 };
 
 export default function Results() {
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    // const onSubmit = data => console.log(data);
+    console.log(errors);
+
+    const [users, setUsers] = useState<User[]>([]);
+    useEffect(() => {
+        getUsers().then(setUsers);
+    }, []);
+    console.log('users', users)
+
     return (
         <>
             <h1>hi this is results</h1>
+
+            <div>
+                <button onClick={() => createUser("John Doe", 20, "john@example.com")}>
+                    Add User
+                </button>
+                <ul>
+                    {users.map((user) => (
+                        <li key={user.id}>
+                            {user.name}
+                            {/* ({user.email}) */}
+                            <button onClick={() => updateUser(user.id, "Updated Name", user.email)}>
+                                Update
+                            </button>
+                            <button onClick={() => deleteUser(user.id)}>Delete</button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            <Link href="/">Subbmit aother form</Link>
         </>
+        // <form onSubmit={handleSubmit(onSubmit)}>
+        //     <input type="text" placeholder="First name" {...register("First name", { required: true, maxLength: 80 })} />
+        //     <input type="text" placeholder="Last name" {...register("Last name", { required: true, maxLength: 100 })} />
+        //     <input type="text" placeholder="Email" {...register("Email", { required: true, pattern: /^\S+@\S+$/i })} />
+        //     <input type="tel" placeholder="Mobile number" {...register("Mobile number", { required: true, minLength: 6, maxLength: 12 })} />
+        //     <select {...register("Title", { required: true })}>
+        //         <option value="Mr">Mr</option>
+        //         <option value="Mrs">Mrs</option>
+        //         <option value="Miss">Miss</option>
+        //         <option value="Dr">Dr</option>
+        //     </select>
+
+        //     <input {...register("Developer", { required: true })} type="radio" value="Yes" />
+        //     <input {...register("Developer", { required: true })} type="radio" value="No" />
+
+        //     <input type="submit" />
+        // </form>
     );
 }
