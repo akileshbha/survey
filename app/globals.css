@@ -29,3 +29,8 @@ body {
 .fmd-btn-control {
   display: none !important;
 }
+
+.fmd-main {
+  padding-left: 3rem !important;
+  padding-right: 3rem !important;
+}
