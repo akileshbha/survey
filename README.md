@@ -13,6 +13,10 @@ npm run dev
 https://orm.drizzle.team/docs/guides/mysql-local-setup
 https://medium.com/@aslandjc7/next-js-15-drizzle-orm-a-beginners-guide-to-crud-operations-ae7f2701a8c3
 
+```bash
+docker run --name drizzle-mysql -e MYSQL_ROOT_PASSWORD=root -d -p 3307:3306 mysql
+```
+
 ```sql
 create database survey;
 ```
