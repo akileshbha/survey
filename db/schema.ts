@@ -6,3 +6,11 @@ export const usersTable = mysqlTable('users_table', {
   age: int().notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
 });
+
+
+export const resultsTable = mysqlTable('results_table', {
+  id: serial().primaryKey(),
+  name: varchar({ length: 255 }).notNull(),
+  age: int().notNull(),
+  email: varchar({ length: 255 }).notNull().unique(),
+});
