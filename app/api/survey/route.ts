@@ -19,7 +19,7 @@ export async function POST(req: Request) {
         await createUser(full_name, age, email)
 
         return Response.json({
-            success: true,
+            ok: true,
             message: "Form stored successfully",
         });
 

@@ -8,9 +8,11 @@ import { useRouter } from 'next/navigation'
 
 const composer = new Composer({
     id: "mailing-list-form",
-    postUrl: "/api/survey",
+    // postUrl: "/api/survey",
+    postUrl: "https://script.google.com/macros/s/AKfycbycWTpehjYxjV_xd1l0h1IbBuXn_PtcgrUCH7uaxMrH6I5Q5yek8LHHUVDUbOxg3dDP/exec",
     restartButton: "show",
     autofocus: "all-slides",
+    postSheetName: "Baltimore Survey",
 });
 
 composer.startSlide({
@@ -113,6 +115,9 @@ export default function Survey() {
                     // 'Content-Type': 'multipart/form-data',
                     // Authorization: `Basic ${process.env.PUBLIC_API_KEY}`,
                 },
+                recaptcha: {
+                    siteKey: "6LchbxIsAAAAAJzg_b_etjStQpmBM7iJyY4DSJDA"
+                }
                 // themeLight: {
                 //     accent: "#353148",
                 //     accentForeground: "#e2d2b6",
@@ -123,9 +128,12 @@ export default function Survey() {
             formsmd.init();
 
             formsmd.onCompletion = function (json) {
-                setTimeout(() => {
-                    router.push('/results')
-                }, 3000);
+                console.log('json', json)
+                if (json.ok == true) {
+                    setTimeout(() => {
+                        router.push('/results')
+                    }, 3000);
+                }
             }
         }
     }, []);
@@ -133,6 +141,6 @@ export default function Survey() {
 
 
     return (
-        <div ref={containerRef} className="w-full h-screen p-3"></div>
+        <div ref={containerRef} className="w-full h-screen"></div>
     );
 }
