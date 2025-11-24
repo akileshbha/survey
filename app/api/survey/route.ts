@@ -10,7 +10,8 @@ export async function POST(req: Request) {
         console.log('data', data)
 
         const full_name = formData.get("full_name") as string;
-        const age = Number(formData.get("age") as string);
+        const rawAge = formData.get("age") as string;
+        const age = rawAge && !isNaN(Number(rawAge)) ? Number(rawAge) : null;
         const email = formData.get("email") as string;
 
 

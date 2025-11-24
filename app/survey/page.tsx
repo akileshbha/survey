@@ -64,6 +64,7 @@ composer.numberInput("age", {
     description: "Must be 18 or older to participate",
     min: 18,
     max: 120,
+    required: true
 });
 composer.slide({
     pageProgress: "30%"
