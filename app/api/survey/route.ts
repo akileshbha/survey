@@ -1,6 +1,6 @@
 // import { mailingList } from "@/db/schema"; // your table schema
 import { createUser } from "@/lib/actions";
-
+import { logError } from "@/lib/errorLogger";
 
 export async function POST(req: Request) {
 
@@ -24,9 +24,18 @@ export async function POST(req: Request) {
         });
 
     } catch (err: any) {
-        console.error("API Error:", err);
+        console.error("::::::::", err);
 
         // Always return JSON, never plain text
+        await logError({
+            message: err.message,
+            stack: err.stack,
+            service: "server",
+            level: "error",
+            path: req.url,
+            payload: { sql: err.cause?.sql, sqlMessage: err.cause?.sqlMessage },
+        });
+
         return new Response(JSON.stringify({
             success: false,
             error: err.message,
