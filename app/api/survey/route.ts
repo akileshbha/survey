@@ -38,7 +38,7 @@ export async function POST(req: Request) {
 
         return new Response(JSON.stringify({
             success: false,
-            error: err.message,
+            error: err.cause?.sqlMessage
         }), {
             status: 500,
             headers: { "Content-Type": "application/json" },

@@ -115,6 +115,8 @@ export default function Survey() {
                     // 'Content-Type': 'multipart/form-data',
                     // Authorization: `Basic ${process.env.PUBLIC_API_KEY}`,
                 },
+                errorFieldKey: "attr",
+                errorMessageKey: "detail"
                 // recaptcha: {
                 //     siteKey: "6LchbxIsAAAAAJzg_b_etjStQpmBM7iJyY4DSJDA"
                 // }
@@ -125,6 +127,26 @@ export default function Survey() {
                 //     color: "#353148"
                 // }
             });
+
+            formsmd.getSubmissionErrors = function (json) {
+                console.log('jsonnn', json)
+                const messages = [];
+
+                // Parse nested validation errors
+                if (json.validation && json.validation.errors) {
+                    for (const error of json.validation.errors) {
+                        messages.push(`${error.attr}: ${error.detail}`);
+                    }
+                }
+
+                // Add general error message
+                if (json.error) {
+                    messages.push(json.error);
+                }
+
+                return messages;
+            };
+
             formsmd.init();
 
             formsmd.onCompletion = function (json) {
