@@ -29,7 +29,7 @@ export async function POST(req: Request) {
         // Always return JSON, never plain text
         await logError({
             message: err.message,
-            stack: err.stack,
+            // stack: err.stack,
             service: "server",
             level: "error",
             path: req.url,
